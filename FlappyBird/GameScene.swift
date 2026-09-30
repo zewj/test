@@ -548,6 +548,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     // MARK: - Contacts
 
     nonisolated func didBegin(_ contact: SKPhysicsContact) {
+        // SpriteKit delivers contact callbacks on the main thread.
+        nonisolated(unsafe) let contact = contact
         MainActor.assumeIsolated {
             handleContact(contact)
         }
